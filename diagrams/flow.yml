@@ -1,0 +1,90 @@
+title Intelligent Emergency Response System (EMS) Flow
+direction right
+
+// Inputs
+Inputs [color: lightblue, icon: phone-call] {
+  Caller Emergency Event [shape: oval, color: lightblue, icon: phone-call]
+  Existing Ambulance Records [shape: oval, color: lightblue, icon: database]
+}
+
+// Processing
+Processing [color: orange, icon: cpu] {
+  FastAPI Receives Request [icon: server, color: orange]
+  Stateless Prediction Endpoints [icon: globe, color: orange] // /predict/severity, /predict/dispatch
+  Model Service Loads Model [icon: cpu, color: orange]
+  Model Available? [shape: diamond, color: yellow, icon: check-square]
+  Use RandomForest Model [icon: cpu, color: green]
+  Use Fallback Heuristics [icon: activity, color: red]
+  Severity Prediction [icon: alert-triangle, color: orange]
+  Dispatch Optimization [icon: shuffle, color: orange]
+  OR Tools Available? [shape: diamond, color: yellow, icon: check-square]
+  Use OR Tools [icon: shuffle, color: green]
+  Use Greedy Algorithm [icon: fast-forward, color: red]
+  ETA Calculation [icon: clock, color: orange]
+  OSRM Available? [shape: diamond, color: yellow, icon: check-square]
+  Use OSRM [icon: map-pin, color: green]
+  Use Haversine [icon: map, color: red]
+}
+
+// Data Persistence
+Data Persistence [color: blue, icon: database] {
+  Store Event in Postgres [icon: database, color: blue]
+  Log Dispatch Decision [icon: file-text, color: blue]
+  Async SQLAlchemy Postgres Backend [icon: database, color: blue]
+}
+
+// Outputs
+Outputs [color: lightgreen, icon: send] {
+  API Response [shape: oval, color: lightgreen, icon: send]
+  Background Task Logging [icon: repeat, color: lightgreen]
+}
+
+// Annotations
+Annotations [color: gray, icon: info] {
+  OSRM LBS Dependency [icon: map-pin, color: gray]
+  Docker Compose Stack [icon: package, color: gray]
+}
+
+// Relationships
+
+FastAPI Receives Request > Stateless Prediction Endpoints
+Stateless Prediction Endpoints > Model Service Loads Model
+Model Service Loads Model > Model Available?
+Model Available? > Use RandomForest Model: Yes
+Model Available? > Use Fallback Heuristics: No
+Use RandomForest Model > Severity Prediction
+Use Fallback Heuristics > Severity Prediction
+
+Severity Prediction > Dispatch Optimization
+Dispatch Optimization > OR Tools Available?
+OR Tools Available? > Use OR Tools: Yes
+OR Tools Available? > Use Greedy Algorithm: No
+Use OR Tools > ETA Calculation
+Use Greedy Algorithm > ETA Calculation
+
+ETA Calculation > OSRM Available?
+OSRM Available? > Use OSRM: Yes
+OSRM Available? > Use Haversine: No
+Use OSRM > Store Event in Postgres
+Use Haversine > Store Event in Postgres
+
+Store Event in Postgres > Log Dispatch Decision
+
+// Async SQLAlchemy/Postgres backend annotation
+Store Event in Postgres > Async SQLAlchemy Postgres Backend
+
+// OSRM/LBS dependency annotation
+Use OSRM > OSRM LBS Dependency
+
+// Stateless endpoints annotation
+Stateless Prediction Endpoints > Stateless Prediction Endpoints
+
+// Docker Compose stack annotation
+FastAPI Receives Request > Docker Compose Stack
+Store Event in Postgres > Docker Compose Stack
+OSRM LBS Dependency > Docker Compose Stack
+
+// Outputs
+API Response > Background Task Logging
+Log Dispatch Decision > Outputs
+Inputs > FastAPI Receives Request

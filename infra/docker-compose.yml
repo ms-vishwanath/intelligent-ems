@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ems_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ems_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  osrm:
+    image: osrm/osrm-backend:latest
+    container_name: ems_osrm
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm-data:/data
+    command: >
+      sh -c "
+      if [ ! -f /data/monaco-latest.osrm ]; then
+        echo 'Downloading Monaco OSM data...';
+        wget -O /data/monaco-latest.osm.pbf https://download.geofabrik.de/europe/monaco-latest.osm.pbf;
+        osrm-extract /data/monaco-latest.osm.pbf -p /opt/car.lua;
+        osrm-partition /data/monaco-latest.osrm;
+        osrm-customize /data/monaco-latest.osrm;
+      fi;
+      osrm-routed --algorithm mld --ip 0.0.0.0 --port 5000 /data/monaco-latest.osrm
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/route/v1/driving/7.4,43.7;7.4,43.7"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    container_name: ems_api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/ems_db
+      OSRM_URL: http://osrm:5000
+      MODEL_PATH: ml/model.pkl
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ../ml:/app/ml
+      - ../app:/app/app
+    command: >
+      sh -c "
+      sleep 5 &&
+      python -c 'from app.db import init_db; import asyncio; asyncio.run(init_db())' &&
+      uvicorn app.api:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+volumes:
+  postgres_data:
+

@@ -1,0 +1,10 @@
+{
+  "patient_age": 64,
+  "patient_gender": "F",
+  "location_lat": 37.7749,
+  "location_lon": -122.4184,
+  "reported_symptoms": "Patient experiencing chest tightness and difficulty breathing",
+  "incident_type": "medical",
+  "caller_phone": "+14155551212"
+}
+

@@ -1,0 +1,10 @@
+{
+  "patient_age": 29,
+  "patient_gender": "M",
+  "location_lat": 34.0525,
+  "location_lon": -118.2437,
+  "reported_symptoms": "Motorcycle accident with suspected fractures",
+  "incident_type": "trauma",
+  "caller_phone": "+13105550101"
+}
+

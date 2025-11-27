@@ -1,0 +1,43 @@
+patient_age,patient_gender,reported_symptoms,incident_type,severity_score
+45,M,"chest pain and difficulty breathing",medical,0.85
+32,F,"severe abdominal pain",medical,0.65
+78,M,"unconscious, not responding",medical,0.95
+12,F,"fever and cough",medical,0.35
+28,M,"minor cut on hand",trauma,0.25
+65,F,"dizziness and weakness",medical,0.55
+35,M,"cardiac symptoms, chest tightness",medical,0.90
+22,F,"nausea and vomiting",medical,0.40
+55,M,"stroke symptoms, slurred speech",medical,0.88
+18,M,"sports injury, ankle pain",trauma,0.30
+82,F,"severe chest pain, cardiac event",medical,0.92
+25,F,"mild headache",medical,0.20
+50,M,"seizure observed",medical,0.75
+40,F,"difficulty breathing, asthma",medical,0.60
+15,M,"fall from bike, arm injury",trauma,0.45
+70,F,"choking incident",medical,0.80
+30,M,"back pain",medical,0.35
+60,F,"unconscious, unknown cause",medical,0.85
+42,M,"fever and body aches",medical,0.30
+88,F,"critical condition, multiple symptoms",medical,0.95
+33,M,"minor burn",trauma,0.25
+55,F,"severe allergic reaction",medical,0.70
+27,M,"panic attack, hyperventilation",medical,0.40
+75,M,"cardiac arrest symptoms",medical,0.98
+20,F,"food poisoning, vomiting",medical,0.35
+48,M,"stroke-like symptoms",medical,0.82
+62,F,"severe pain, unknown origin",medical,0.68
+29,M,"minor injury, bleeding",trauma,0.30
+80,F,"respiratory distress",medical,0.75
+36,M,"chest discomfort",medical,0.50
+52,F,"unconscious, diabetic emergency",medical,0.78
+24,M,"sports injury, knee pain",trauma,0.35
+68,F,"severe headache, possible stroke",medical,0.80
+43,M,"cardiac symptoms",medical,0.85
+19,F,"anxiety attack",medical,0.30
+71,M,"fall, hip injury",trauma,0.55
+38,F,"severe abdominal pain",medical,0.65
+56,M,"unconscious, alcohol related",medical,0.60
+26,F,"minor cut, needs stitches",trauma,0.30
+84,M,"critical medical emergency",medical,0.93
+31,F,"moderate pain, stable condition",medical,0.40
+
